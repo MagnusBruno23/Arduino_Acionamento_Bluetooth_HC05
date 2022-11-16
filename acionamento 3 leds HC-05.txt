@@ -1,0 +1,71 @@
+#include <SoftwareSerial.h>
+SoftwareSerial HC05(5,6); //RX, TX
+
+int state = 0;
+int state2 = 0;
+int state3 = 0;
+
+#define verde 2
+#define amarelo 3
+#define vermelho 4
+
+void setup() {
+  
+  Serial.begin(9600);
+  HC05.begin(9600);
+  pinMode(verde, OUTPUT);
+  pinMode(amarelo, OUTPUT);
+  pinMode(vermelho, OUTPUT);
+  
+}
+
+void loop() {
+  
+  int readBluetooth = HC05.read();
+
+  switch(readBluetooth){
+    
+    case 'a':
+    
+      state = !state;
+      digitalWrite(verde, state);
+      
+      if(state==1){
+        HC05.println("LED VERDE ON");
+      }
+      else{
+        HC05.println("LED VERDE OFF");
+      }
+
+      break;
+
+    case 'b':
+
+      state2 = !state2;
+      digitalWrite(amarelo, state2);
+
+      if(state2==1){
+        HC05.println("LED AMARELO ON");
+      }
+      else{
+        HC05.println("LED AMARELO OFF");
+      }
+
+      break;
+
+    case 'c':
+
+      state3 = !state3;
+      digitalWrite(vermelho, state3);
+
+      if(state3==1){
+        HC05.println("LED VERMELHO ON");
+      }
+      else{
+        HC05.println("LED VERMELHO OFF");
+      }
+
+      break;
+      
+  }
+}
